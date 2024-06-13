@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8080
 
 # Run the application
-CMD ["gunicorn", "-k", "eventlet", "-w", "1", ":8080", "app:app"]
+CMD ["gunicorn", "-k", "eventlet", "-w", "1", "app:app"]
