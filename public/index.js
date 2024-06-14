@@ -17,6 +17,8 @@ sio.on('mult', (data) => {
 
 sio.on('mult2', (data) => {
     console.log('mult2',data);
+    document.getElementById('content').innerHTML = data.value;
+    document.getElementById('content2').innerHTML = data.value+8;
 });
 
 // The sum result event, using callbacks is no longer needed

@@ -1,4 +1,5 @@
 import socketio
+import random
 
 sio = socketio.Server()
 app = socketio.WSGIApp(sio, static_files={
@@ -10,7 +11,7 @@ app = socketio.WSGIApp(sio, static_files={
 def task2(sid):
     while True:
         sio.sleep(5)
-        sio.emit('mult2',{'numbers': [3, 4]})
+        sio.emit('mult2',{'value': random.randint(0, 100)})
 
 def task(sid):
     while True:
