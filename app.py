@@ -34,6 +34,7 @@ def connect(sid, environ):
 
 
 
+
 @sio.event
 def disconnect(sid):
     print(sid, 'disconnected')
@@ -48,4 +49,5 @@ def sum(sid, data):
 @app.route('/sobre')
 def sobre():
     return "eurico"
+
 
