@@ -1,9 +1,17 @@
+import eventlet
+eventlet.monkey_patch()  # Ensure compatibility
+
 import socketio
 import random
+from flask import Flask
 
+# Initialize Flask app
+app = Flask(__name__)
+
+# Initialize SocketIO
 sio = socketio.Server()
-app = socketio.WSGIApp(sio, static_files={
-    '/':'./public/'    
+app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app, static_files={
+    '/': './templates/'
 })
 
 #event handler connect
@@ -36,4 +44,8 @@ def disconnect(sid):
 def sum(sid, data):
     result = data['number'][0] + data['number'][1]
     return result
+
+@app.route('/sobre')
+def sobre():
+    return "eurico"
 
