@@ -9,6 +9,15 @@ import websocket
 import json
 import pandas as pd
 
+from threading import Lock
+
+"""
+Background Thread
+"""
+thread = None
+thread_lock = Lock()
+
+
 btc = 0
 times = 0
 # Initialize Flask app
@@ -44,7 +53,14 @@ def task(sid):
 @sio.event
 def connect(sid, environ):
     print(sid, 'connected')
-    sio.start_background_task(background_thread)
+    global thread
+    print('Client connected')
+
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = sio.start_background_task(background_thread)
+    #sio.start_background_task(background_thread)
     sio.sleep(5)
     sio.start_background_task(task, sid)
 
