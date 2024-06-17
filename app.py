@@ -113,5 +113,6 @@ def background_thread():
             ws.run_forever()
         except Exception as e:
             print(f"WebSocket connection failed: {e}")
+            
 
 
