@@ -32,12 +32,12 @@ def task(sid):
     global btc
     
     while True:
-        global btc
+        #global btc
         sio.sleep(1)
         sio.emit('mult',{'value': random.randint(200, 300)})
         #sio.emit('mult',{'value': float(btc)})
-        print('btc inside',btc)
-        print(type(btc))
+        #print('btc inside',btc)
+        #print(type(btc))
 
 @sio.event
 def connect(sid, environ):
