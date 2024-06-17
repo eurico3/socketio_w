@@ -120,7 +120,8 @@ def on_message(wd,message):
     global out
     out = json.loads(message)
     #print(out)
-    df_import(out)
+    sio.emit('updateData', {'out': out})
+    #df_import(out)
 
 
 def background_thread():
