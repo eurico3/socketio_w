@@ -103,18 +103,19 @@ def df_import(data):
 def on_message(wd,message):
     global out
     out = json.loads(message)
+    print(out)
     df_import(out)
 
 
 def background_thread():
    
-    while True:
-        try:
-            ws = websocket.WebSocketApp(endpoint, on_message=on_message)
-            print("WebSocket connection successful")
+    try:
+        ws = websocket.WebSocketApp(endpoint, on_message=on_message)
+        print("WebSocket connection successful")
+        while True:
             ws.run_forever()
-        except Exception as e:
-            print(f"WebSocket connection failed: {e}")
+    except Exception as e:
+        print(f"WebSocket connection failed: {e}")
 
 
 
