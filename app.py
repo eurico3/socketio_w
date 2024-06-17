@@ -103,7 +103,7 @@ def df_import(data):
 def on_message(wd,message):
     global out
     out = json.loads(message)
-    print(out)
+    #print(out)
     df_import(out)
 
 
