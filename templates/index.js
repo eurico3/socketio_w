@@ -13,6 +13,7 @@ sio.on('disconnect', () => {
 
 sio.on('mult', (data) => {
     console.log('mult',data);
+    document.getElementById('content3').innerHTML = data.value;
 });
 
 sio.on('mult2', (data) => {
@@ -21,8 +22,14 @@ sio.on('mult2', (data) => {
     document.getElementById('content2').innerHTML = data.value+8;
 });
 
+
+sio.on('updateData', (data) => {
+    console.log('updateData',data);
+    document.getElementById('content4').innerHTML = data.btc;
+    //document.getElementById('content2').innerHTML = data.value+8;
+});
+
 // The sum result event, using callbacks is no longer needed
 //sio.on('sum_result', (data) => {
 //    console.log(data)
 //})
-

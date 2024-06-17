@@ -5,6 +5,11 @@ import socketio
 import random
 from flask import Flask
 
+import websocket
+import json
+import pandas as pd
+
+global btc
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -14,6 +19,8 @@ app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app, static_files={
     '/': './templates/'
 })
 
+endpoint = 'wss://stream.binance.com:9443/ws/!miniTicker@arr'
+
 #event handler connect
 #event decorator
 def task2(sid):
@@ -22,16 +29,26 @@ def task2(sid):
         sio.emit('mult2',{'value': random.randint(0, 100)})
 
 def task(sid):
+    global btc
+    
     while True:
-        sio.sleep(5)
-        sio.emit('mult',{'numbers': [3, 4]})
+        global btc
+        sio.sleep(1)
+        sio.emit('mult',{'value': random.randint(200, 300)})
+        #sio.emit('mult',{'value': float(btc)})
+        print('btc inside',btc)
+        print(type(btc))
 
 @sio.event
 def connect(sid, environ):
     print(sid, 'connected')
+    sio.start_background_task(background_thread)
+    sio.sleep(5)
     sio.start_background_task(task, sid)
+
     sio.start_background_task(task2, sid)
 
+    #sio.start_background_task(background_thread)
 
 
 
@@ -49,5 +66,48 @@ def sum(sid, data):
 @app.route('/sobre')
 def sobre():
     return "eurico"
+
+
+def df_import(data):
+    global btc
+    global times
+    #Creating DF
+    df_ = pd.DataFrame(data)
+    #Filtering BTC USDT
+    df_ = df_[df_['s'].str.endswith('BTCUSDT')]
+    #Convert to float
+    df_.c = df_.c.astype(float)
+    #Convert to int - da erro - temos que converter para float
+    df_.E = df_.E.astype(float)
+    #df_.E = df_.E.astype(int)
+    #df_.E = pd.to_datetime(df_['E'],unit='ms')
+    #Selecting Columns
+    final = df_[['s','E','c']]
+    #Print
+    print(final.iloc[-1].c)
+    btc = final.iloc[-1].c
+    times = final.iloc[-1].E
+    
+    sio.emit('updateData', {'btc': btc, 'times':times})
+
+    print('btc',btc)
+    
+ 
+
+    #socketio.emit('updateData', {'btc': btc})
+    #socketio.emit('updateData', {'times':times})
+    #print(times)
+
+def on_message(wd,message):
+    global out
+    out = json.loads(message)
+    df_import(out)
+
+
+def background_thread():
+   
+    while True:
+        ws = websocket.WebSocketApp(endpoint, on_message=on_message)
+        ws.run_forever()
 
 
