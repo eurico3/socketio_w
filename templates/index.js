@@ -25,7 +25,7 @@ sio.on('mult2', (data) => {
 
 sio.on('updateData', (data) => {
     console.log('updateData',data);
-    document.getElementById('content4').innerHTML = data;
+    document.getElementById('content4').innerHTML = data.btc;
     //document.getElementById('content2').innerHTML = data.value+8;
 });
 
