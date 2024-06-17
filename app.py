@@ -24,8 +24,8 @@ times = 0
 app = Flask(__name__)
 
 # Initialize SocketIO
-sio = socketio.Server()
-app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app, static_files={
+sio = socketio.Server(cors_allowed_origins ='*')
+app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app,static_files={
     '/': './templates/'
 })
 
