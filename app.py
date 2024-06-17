@@ -107,7 +107,11 @@ def on_message(wd,message):
 def background_thread():
    
     while True:
-        ws = websocket.WebSocketApp(endpoint, on_message=on_message)
-        ws.run_forever()
+        try:
+            ws = websocket.WebSocketApp(endpoint, on_message=on_message)
+            print("WebSocket connection successful")
+            ws.run_forever()
+        except Exception as e:
+            print(f"WebSocket connection failed: {e}")
 
 
