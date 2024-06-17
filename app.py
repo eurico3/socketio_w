@@ -10,6 +10,7 @@ import json
 import pandas as pd
 
 btc = 0
+times = 0
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -113,6 +114,6 @@ def background_thread():
             ws.run_forever()
         except Exception as e:
             print(f"WebSocket connection failed: {e}")
-            
+
 
 
