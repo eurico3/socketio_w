@@ -9,7 +9,7 @@ import websocket
 import json
 import pandas as pd
 
-global btc
+btc = 0
 # Initialize Flask app
 app = Flask(__name__)
 
