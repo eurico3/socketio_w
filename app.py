@@ -35,7 +35,8 @@ def task(sid):
     while True:
         #global btc
         sio.sleep(1)
-        sio.emit('mult',{'value': random.randint(200, 300)})
+        #sio.emit('mult',{'value': random.randint(200, 300)})
+        sio.emit('mult',{'value': btc})
         #sio.emit('mult',{'value': float(btc)})
         #print('btc inside',btc)
         #print(type(btc))

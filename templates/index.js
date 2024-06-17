@@ -12,7 +12,7 @@ sio.on('disconnect', () => {
 });
 
 sio.on('mult', (data) => {
-    console.log('1337 mult',data);
+    console.log('1400 mult',data);
     document.getElementById('content3').innerHTML = data.value;
 });
 
