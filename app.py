@@ -18,8 +18,7 @@ thread = None
 thread_lock = Lock()
 
 
-btc = 0
-times = 0
+
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -39,13 +38,13 @@ def task2(sid):
         sio.emit('mult2',{'value': random.randint(0, 100)})
 
 def task(sid):
-    global btc
+
     
     while True:
         #global btc
         sio.sleep(1)
-        #sio.emit('mult',{'value': random.randint(200, 300)})
-        sio.emit('mult',{'value': btc})
+        sio.emit('mult',{'value': random.randint(200, 300)})
+        #sio.emit('mult',{'value': btc})
         #sio.emit('mult',{'value': float(btc)})
         #print('btc inside',btc)
         #print(type(btc))
@@ -87,8 +86,7 @@ def sobre():
 
 
 def df_import(data):
-    global btc
-    global times
+
     #Creating DF
     df_ = pd.DataFrame(data)
     #Filtering BTC USDT
@@ -119,10 +117,10 @@ def df_import(data):
 def on_message(wd,message):
     global out
     out = json.loads(message)
-    print(out)
+    #print(out)
     #print(out["c"])
-    sio.emit('updateData', {'out': out})
-    #df_import(out)
+    #sio.emit('updateData', {'out': out})
+    df_import(out)
 
 
 def background_thread():
