@@ -119,7 +119,8 @@ def df_import(data):
 def on_message(wd,message):
     global out
     out = json.loads(message)
-    #print(out)
+    print(out)
+    #print(out["c"])
     sio.emit('updateData', {'out': out})
     #df_import(out)
 
