@@ -11,6 +11,8 @@ import pandas as pd
 
 from threading import Lock
 
+import os
+
 """
 Background Thread
 """
@@ -103,7 +105,7 @@ def df_import(data):
     print(final.iloc[-1].c)
     btc = final.iloc[-1].c
     times = final.iloc[-1].E
-    sio.emit('updateData', {'btc': random.randint(1000, 2000)})
+    sio.emit('updateData', {'btc': btc})
     
     #sio.emit('updateData', {'btc': btc, 'times':times})
 
@@ -136,3 +138,5 @@ def background_thread():
 
 
 
+if __name__ == '__main__':
+    app.run(port=int(os.environ.get("PORT", 8080)),host='0.0.0.0',debug=True)
